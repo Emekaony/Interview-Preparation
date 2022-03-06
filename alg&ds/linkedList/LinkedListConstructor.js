@@ -7,22 +7,18 @@ class LinkedList {
     this.length = 1;
   }
   push(value) {
+    /*
+        Check if at least one Node exists, else set the new one to the head
+    */
     const newNode = new Node(value);
-    // last item and tail should point to this item
-    // if there was no item in the linkedList, then head and tail both point to it
     if (!this.head) {
-      // there's no Node in the LinkedList
-      // so what we do is set both the tail and head to this Node
       this.head = newNode;
       this.tail = newNode;
     } else {
-      // set the next value of the tail to the new Node
-      // then set the tail to the new Node
       this.tail.next = newNode;
       this.tail = newNode;
-      // these two steps have to be in order, else there would be no connection
-      // between the second to last and the last element in the LinkedList
     }
+
     this.length++;
     return this;
   }
