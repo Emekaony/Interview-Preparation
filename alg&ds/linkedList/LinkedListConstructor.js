@@ -1,7 +1,3 @@
-const {
-  SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS,
-  DH_UNABLE_TO_CHECK_GENERATOR,
-} = require("constants");
 const Node = require("./Node");
 
 class LinkedList {
