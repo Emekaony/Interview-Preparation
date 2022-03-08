@@ -6,6 +6,7 @@ class LinkedList {
     this.tail = new Node(value);
     this.length = 1;
   }
+
   push(value) {
     /*
         Check if at least one Node exists, else set the new one to the head
@@ -22,6 +23,7 @@ class LinkedList {
     this.length++;
     return this;
   }
+
   pop() {
     // if there's nothing in the LinkedList, return undefined. Can't pop what doesn't exist
     if (!this.head) return undefined;
@@ -47,17 +49,26 @@ class LinkedList {
 
     return temp;
   }
+
+  unShift(value) {
+    let newNode = new Node(value);
+    // add a Node to the beginning of the LL
+    if (!this.head) {
+      this.head = newNode;
+      this.tail = newNode;
+    } else {
+      newNode.next = this.head;
+      this.head = newNode;
+    }
+
+    this.length++;
+    return this;
+  }
 }
 
 let myLinkedList = new LinkedList(4);
-myLinkedList.push(6);
-console.log(myLinkedList);
+myLinkedList.unShift(12);
+myLinkedList.unShift(17);
+myLinkedList.unShift(77);
 
-myLinkedList.pop();
-console.log(myLinkedList);
-
-myLinkedList.pop();
-console.log(myLinkedList);
-
-console.log(myLinkedList.pop());
 console.log(myLinkedList);
