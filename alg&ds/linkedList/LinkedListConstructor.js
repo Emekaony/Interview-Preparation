@@ -1,3 +1,7 @@
+const {
+  SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS,
+  DH_UNABLE_TO_CHECK_GENERATOR,
+} = require("constants");
 const Node = require("./Node");
 
 class LinkedList {
@@ -64,11 +68,58 @@ class LinkedList {
     this.length++;
     return this;
   }
+
+  shift() {
+    if (!this.head) return undefined;
+
+    let temp;
+
+    if (this.length === 1) {
+      temp = this.head;
+      this.head = null;
+      this.tail = null;
+    } else if (this.head.next) {
+      temp = this.head;
+      this.head = this.head.next;
+      this.tail = this.tail.next;
+    }
+
+    this.length--;
+    return temp;
+  }
+
+  logAll() {
+    let dummy = this.head;
+    while (dummy) {
+      console.log(dummy.value);
+      dummy = dummy.next;
+    }
+  }
+
+  search(value) {
+    let dummy = this.head;
+    let found = false;
+    while (dummy) {
+      if (dummy.value === value) {
+        found = true;
+        break;
+      }
+      // don't forget this or you will end up in an infinite loop
+      dummy = dummy.next;
+    }
+    return found;
+  }
 }
 
 let myLinkedList = new LinkedList(4);
+myLinkedList.unShift(99);
+myLinkedList.unShift(32);
 myLinkedList.unShift(12);
-myLinkedList.unShift(17);
-myLinkedList.unShift(77);
+//console.log(myLinkedList);
 
+//console.log(myLinkedList.shift());
+//console.log(myLinkedList);
+
+//console.log(myLinkedList.search(4));
+myLinkedList.logAll();
 console.log(myLinkedList);
