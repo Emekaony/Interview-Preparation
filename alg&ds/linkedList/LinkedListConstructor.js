@@ -2,120 +2,73 @@ const Node = require("./Node");
 
 class LinkedList {
   constructor(value) {
-    this.head = new Node(value);
-    this.tail = new Node(value);
-    this.length = 1;
+    const newNode = new Node(value);
+    this.head = newNode;
+    this.tail = this.head;
+    this.size = 1;
   }
 
   push(value) {
-    /*
-        Check if at least one Node exists, else set the new one to the head
-    */
+    // add an item to the end of the linkedList
     const newNode = new Node(value);
+
     if (!this.head) {
       this.head = newNode;
       this.tail = newNode;
     } else {
+      // this also sets the value of the heads next to the new object
       this.tail.next = newNode;
+      // now the tail points to a new Node, so setting its next value again will not affect the head
       this.tail = newNode;
     }
 
-    this.length++;
-    return this;
+    this.size++;
   }
 
   pop() {
-    // if there's nothing in the LinkedList, return undefined. Can't pop what doesn't exist
-    if (!this.head) return undefined;
+    // remove the last node from the LL
+    if (this.size === 0) return undefined;
 
-    // use the two pointer strategy to traverse the LL till you arrive at the last one
-    let temp = this.head;
-    let pre = this.head;
-
-    while (temp.next) {
-      pre = temp;
-      temp = temp.next;
-    }
-
-    this.tail = pre;
-    this.tail.next = null;
-    this.length--;
-
-    // One more Node left, so just set head and tail to null
-    if (this.length === 0) {
+    let temp;
+    if (this.size === 1) {
+      temp = this.head;
       this.head = null;
       this.tail = null;
+    } else if (this.size > 1) {
+      let temp = this.head;
+      let pre = this.head;
+
+      while (temp.next) {
+        pre = temp;
+        temp = temp.next;
+      }
+      // we would have traversed the LL till the end by now
+      this.tail = pre;
+      this.tail.next = null;
     }
 
+    this.size--;
     return temp;
   }
 
   unShift(value) {
+    // add a new node to the beginning of the LL
     let newNode = new Node(value);
-    // add a Node to the beginning of the LL
-    if (!this.head) {
+    if (this.size === 0) {
       this.head = newNode;
       this.tail = newNode;
-    } else {
+    } else if (this.size >= 1) {
       newNode.next = this.head;
       this.head = newNode;
     }
 
-    this.length++;
-    return this;
-  }
-
-  shift() {
-    if (!this.head) return undefined;
-
-    let temp;
-
-    if (this.length === 1) {
-      temp = this.head;
-      this.head = null;
-      this.tail = null;
-    } else if (this.head.next) {
-      temp = this.head;
-      this.head = this.head.next;
-      this.tail = this.tail.next;
-    }
-
-    this.length--;
-    return temp;
-  }
-
-  logAll() {
-    let dummy = this.head;
-    while (dummy) {
-      console.log(dummy.value);
-      dummy = dummy.next;
-    }
-  }
-
-  search(value) {
-    let dummy = this.head;
-    let found = false;
-    while (dummy) {
-      if (dummy.value === value) {
-        found = true;
-        break;
-      }
-      // don't forget this or you will end up in an infinite loop
-      dummy = dummy.next;
-    }
-    return found;
+    this.size++;
   }
 }
 
-let myLinkedList = new LinkedList(4);
-myLinkedList.unShift(99);
-myLinkedList.unShift(32);
-myLinkedList.unShift(12);
-//console.log(myLinkedList);
-
-//console.log(myLinkedList.shift());
-//console.log(myLinkedList);
-
-//console.log(myLinkedList.search(4));
-myLinkedList.logAll();
+let myLinkedList = new LinkedList(22);
+myLinkedList.push(44);
+myLinkedList.pop();
+myLinkedList.unShift(899);
+myLinkedList.unShift(433);
 console.log(myLinkedList);
